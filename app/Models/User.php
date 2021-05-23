@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -21,6 +23,8 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property Carbon $createdAt User created at
  * @property Carbon $updatedAt User updated at
  * @property Carbon $deletedAt User deleted at
+ *
+ * @property-read Collection|Message[] $messages User messages
  */
 class User extends Authenticatable implements JWTSubject
 {
@@ -106,5 +110,15 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims(): array
     {
         return [];
+    }
+    
+    /**
+     * User messages.
+     *
+     * @return HasMany
+     */
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class);
     }
 }

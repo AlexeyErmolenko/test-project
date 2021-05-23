@@ -14,16 +14,16 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create(User::TABLE_NAME, function (Blueprint $table) {
             $table->id();
-            $table->string('firstName',30)->nullable();
-            $table->string('lastName', 30)->nullable();
-            $table->string('email', 100)->unique();
-            $table->string('password', 120);
-            $table->enum('role', [User::ROLE_ADMIN, User::ROLE_USER])->default(User::ROLE_USER);
-            $table->timestamp('createdAt', 0)->nullable();
-            $table->timestamp('updatedAt', 0)->nullable();
-            $table->timestamp('deletedAt', 0)->nullable();
+            $table->string(User::FIRST_NAME,30)->nullable();
+            $table->string(User::LAST_NAME, 30)->nullable();
+            $table->string(User::EMAIL, 100)->unique();
+            $table->string(User::PASSWORD, 120);
+            $table->enum(User::ROLE, [User::ROLE_ADMIN, User::ROLE_USER])->default(User::ROLE_USER);
+            $table->timestamp(User::CREATED_AT, 0)->nullable();
+            $table->timestamp(User::UPDATED_AT, 0)->nullable();
+            $table->timestamp(User::DELETED_AT, 0)->nullable();
         });
     }
 
@@ -34,6 +34,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists(User::TABLE_NAME);
     }
 }
