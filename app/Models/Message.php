@@ -62,7 +62,6 @@ class Message extends Model
     protected $fillable = [
         self::USER_ID,
         self::MESSAGE,
-        self::USER_ID,
     ];
     
     /**
@@ -70,8 +69,8 @@ class Message extends Model
      *
      * @return BelongsTo
      */
-    protected function user(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, self::USER_ID);
     }
 }
