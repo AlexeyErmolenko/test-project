@@ -33,9 +33,11 @@ abstract class BaseServiceWithValidation extends BaseService
      * @param array $data Data for validation
      * @param array $roles Roles for validation
      *
+     * @return void
+     *
      * @throws ValidationException
      */
-    protected function validate(array $data, array $roles)
+    protected function validate(array $data, array $roles): void
     {
         $validator = $this->validationFactory->make($data, $roles);
         

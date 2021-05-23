@@ -2,19 +2,33 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
+/**
+ * User object.
+ *
+ * @property int $id User identifier
+ * @property string $firstName User first name
+ * @property string $lastName User last name
+ * @property string $email User email
+ * @property string $password User hash password
+ * @property string $role User role
+ * @property Carbon $createdAt User created at
+ * @property Carbon $updatedAt User updated at
+ * @property Carbon $deletedAt User deleted at
+ */
 class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable, SoftDeletes;
     
     public const ID = 'id';
-    public const LAST_NAME = 'lastName';
     public const FIRST_NAME = 'firstName';
+    public const LAST_NAME = 'lastName';
     public const EMAIL = 'email';
     public const PASSWORD  = 'password';
     public const ROLE = 'role';

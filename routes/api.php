@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,9 +17,12 @@ use App\Http\Controllers\Api\AuthController;
 
 Route::prefix(config('api.version', 'v1'))->group(function () {
     Route::post('auth', [AuthController::class, 'login']);
+    Route::post('users', [UserController::class, 'registration']);
     
     Route::middleware('api.auth')->group(function() {
         Route::put('auth', [AuthController::class, 'refresh']);
         Route::delete('auth', [AuthController::class, 'logout']);
+        
+        Route::get('users/me', [UserController::class, 'getMeProfile']);
     });
 });

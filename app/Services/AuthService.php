@@ -65,18 +65,14 @@ class AuthService extends BaseServiceWithValidation
     {
         return [
             LoginRequest::EMAIL => [
+                'required',
                 'string',
                 'min:3',
                 'max:100',
                 'email',
                 Rule::exists(User::TABLE_NAME, User::EMAIL),
             ],
-            LoginRequest::PASSWORD => [
-                'required',
-                'string',
-                'min:5',
-                'max:30',
-            ],
+            LoginRequest::PASSWORD => ['required', 'string', 'min:5', 'max:30'],
         ];
     }
 }
