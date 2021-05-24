@@ -28,9 +28,9 @@ Route::prefix(config('api.version', 'v1'))->group(function () {
         Route::get('users/me', [UserController::class, 'getMeProfile']);
         
         Route::post('messages', [MessageController::class, 'store']);
+        Route::get('messages/file', [MessageController::class, 'getFile']);
         Route::get('messages/{id}', [MessageController::class, 'show']);
         Route::put('messages/{id}', [MessageController::class, 'update']);
         Route::delete('messages/{id}', [MessageController::class, 'remove']);
-        Route::get('messages/file', [MessageController::class, 'getFile']);
     });
 });

@@ -6,6 +6,7 @@ use App\Http\Requests\MessageRequest;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Throwable;
@@ -15,6 +16,22 @@ use Throwable;
  */
 class MessageService extends BaseServiceWithValidation
 {
+    protected const COUNT_MESSAGES = 10;
+    
+    /**
+     * Get last messages.
+     *
+     * @param int|null $count Count messages.
+     *
+     * @return Collection
+     */
+    public function getLastMessages(?int $count = null): Collection
+    {
+        return Message::with(['user'])
+            ->orderBy(Message::ID, 'desc')
+            ->limit($count ?? self::COUNT_MESSAGES)
+            ->get();
+    }
     /**
      * Get list list messages.
      *

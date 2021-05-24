@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\DownloadRequest;
 use App\Http\Requests\MessageRequest;
 use App\Http\Resources\MessageCollection;
 use App\Http\Resources\MessageResource;
 use App\Models\Message;
 use App\Policies\MessagePolicy;
+use App\Services\FileService;
 use App\Services\MessageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -30,13 +32,21 @@ class MessageController extends Controller
     protected $service;
     
     /**
+     * File service.
+     *
+     * @var FileService
+     */
+    protected $fileService;
+    
+    /**
      * Controller for working message entities.
      *
      * @param MessageService $service Message service
      */
-    public function __construct(MessageService $service)
+    public function __construct(MessageService $service, FileService $fileService)
     {
         $this->service = $service;
+        $this->fileService = $fileService;
     }
     
     /**
@@ -49,9 +59,15 @@ class MessageController extends Controller
         return new MessageCollection($this->service->getMessages());
     }
     
-    public function getFile()
+    /**
+     * Download last messages as file.
+     *
+     * @param DownloadRequest $request
+     */
+    public function getFile(DownloadRequest $request)
     {
-        // TODO it need make
+        //TODO it need make
+        $this->fileService->download($request, $this->service->getLastMessages());
     }
     
     /**
