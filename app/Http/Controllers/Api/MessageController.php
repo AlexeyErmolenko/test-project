@@ -15,6 +15,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Throwable;
 
 /**
@@ -62,12 +63,19 @@ class MessageController extends Controller
     /**
      * Download last messages as file.
      *
-     * @param DownloadRequest $request
+     * @param DownloadRequest $request Download http request
+     *
+     * @return StreamedResponse
      */
-    public function getFile(DownloadRequest $request)
+    public function getFile(DownloadRequest $request): StreamedResponse
     {
-        //TODO it need make
-        $this->fileService->download($request, $this->service->getLastMessages());
+        $fileType = $this->fileService->getFileType($request);
+        
+        $fileName = $this->fileService->getFileName($fileType);
+        $headers = $this->fileService->getHeaders($fileType);
+        $callback = $this->fileService->getCallback($fileType, $this->service->getLastMessages());
+        
+        return response()->streamDownload($callback, $fileName, $headers);
     }
     
     /**
